@@ -8,12 +8,15 @@ import {
   CardContent,
   TextField,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 
 import Grid from "@mui/material/Grid";
 import { useSnackbar } from "notistack";
+import theme from "../theme/theme";
 
 const Home = () => {
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [editingId, setEditingId] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -137,7 +140,14 @@ const Home = () => {
 
       <Box component="form" onSubmit={handleSubmit} sx={{ mb: 4 }}>
         <Grid container spacing={2}>
-          <Grid {...({} as any)} item xs={12} sm={6} md={4}>
+          <Grid
+            {...({} as any)}
+            item
+            xs={12}
+            sm={6}
+            md={4}
+            sx={{ width: isMobile ? "100%" : "250px" }}
+          >
             <TextField
               label="Nome"
               name="nome"
@@ -148,7 +158,14 @@ const Home = () => {
             />
           </Grid>
 
-          <Grid {...({} as any)} item xs={12} sm={6} md={4}>
+          <Grid
+            {...({} as any)}
+            item
+            xs={12}
+            sm={6}
+            md={4}
+            sx={{ width: isMobile ? "100%" : "250px" }}
+          >
             <TextField
               label="Categoria"
               name="categoria"
@@ -159,7 +176,13 @@ const Home = () => {
             />
           </Grid>
 
-          <Grid {...({} as any)} item xs={12} md={4}>
+          <Grid
+            {...({} as any)}
+            item
+            xs={12}
+            md={4}
+            sx={{ width: isMobile ? "100%" : "250px" }}
+          >
             <TextField
               label="Descrição"
               name="descricao"
@@ -169,7 +192,14 @@ const Home = () => {
             />
           </Grid>
 
-          <Grid {...({} as any)} item xs={12} sm={6} md={4}>
+          <Grid
+            {...({} as any)}
+            item
+            xs={12}
+            sm={6}
+            md={4}
+            sx={{ width: isMobile ? "100%" : "250px" }}
+          >
             <TextField
               label="Unidade de Medida"
               name="unidadeMedida"
@@ -180,7 +210,14 @@ const Home = () => {
             />
           </Grid>
 
-          <Grid {...({} as any)} item xs={12} sm={6} md={4}>
+          <Grid
+            {...({} as any)}
+            item
+            xs={12}
+            sm={6}
+            md={4}
+            sx={{ width: isMobile ? "100%" : "250px" }}
+          >
             <TextField
               label="Marca"
               name="marca"
@@ -192,19 +229,24 @@ const Home = () => {
             />
           </Grid>
 
-          <Grid container spacing={2}>
+          <Grid
+            container
+            spacing={2}
+            sx={{ width: isMobile ? "100%" : "250px" }}
+          >
             <Grid
               {...({} as any)}
               item
               xs={12}
               sm={editingId !== null ? 6 : 12}
+              sx={{ width: isMobile ? "100%" : "250px" }}
             >
               <Button
                 type="submit"
                 variant="contained"
                 color={editingId !== null ? "warning" : "primary"}
                 fullWidth
-                sx={{ height: "56px" }}
+                sx={{ height: "56px", width: isMobile ? "100%" : "250px" }}
               >
                 {editingId !== null ? "Atualizar" : "Adicionar"}
               </Button>
