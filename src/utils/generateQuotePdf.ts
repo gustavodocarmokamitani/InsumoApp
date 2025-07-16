@@ -39,14 +39,6 @@ export const generateQuotePdf = ({ selecionados, clientInfo }: PdfData) => {
     year: "numeric",
   }); // Formato DD/MM/AAAA
 
-  // Calcula totais
-  const subtotal = selecionados.reduce(
-    (acc, s) => acc + s.quantidade * Number(s.precoUnitario),
-    0
-  );
-  const additionalCharges = 0; // Ajuste conforme necessário. Na imagem é R$ 0.00 fixo.
-  const grandTotal = subtotal + additionalCharges;
-
   // Header - "ORÇAMENTO"
   doc.setFontSize(22);
   doc.text("Lista de Materiais", 14, 20); // Alinhado à esquerda
@@ -117,8 +109,6 @@ export const generateQuotePdf = ({ selecionados, clientInfo }: PdfData) => {
     body: selecionados.map((s, idx) => [
       (idx + 1).toString(),
       s.nome,
-      `R$ ${Number(s.precoUnitario).toFixed(2)}`,
-      `R$ ${(s.quantidade * Number(s.precoUnitario)).toFixed(2)}`,
     ]),
     startY: currentY + 5,
     styles: { fontSize: 9, cellPadding: 3 },
@@ -137,17 +127,6 @@ export const generateQuotePdf = ({ selecionados, clientInfo }: PdfData) => {
 
   const finalYAfterItemsTable =
     (doc as any).lastAutoTable.finalY || currentY + 5;
-
-  // TOTais SECTION (Voltou para a implementação anterior)
-  doc.setFontSize(10);
-  // Total Geral (bold)
-  doc.setFont("helvetica", "bold");
-  doc.text("Total Geral", 140, finalYAfterItemsTable + 24); // Posição do label
-  doc.text(`R$ ${grandTotal.toFixed(2)}`, 196, finalYAfterItemsTable + 24, {
-    // Posição do valor
-    align: "right",
-  });
-  doc.setFont("helvetica", "normal"); // Reset font
 
   // Line below Grand Total
   doc.setLineWidth(0.5);
