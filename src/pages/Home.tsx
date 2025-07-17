@@ -326,7 +326,7 @@ const Home = () => {
                   color="text.secondary"
                   sx={{ my: 2 }}
                 >
-                  Descrição: {insumo.descricao}, {insumo.descricao},{" "}
+                  Descrição: {insumo.descricao}
                   {insumo.descricao}
                 </Typography>
                 <Typography
