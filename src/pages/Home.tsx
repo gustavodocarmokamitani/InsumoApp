@@ -88,7 +88,7 @@ const Home = () => {
         await api.put(`/insumos/${editingId}`, [form]);
       } else {
         // Criação
-        await api.post("/insumos", [form]);
+        await api.post("/insumos", form);
       }
 
       setForm({
