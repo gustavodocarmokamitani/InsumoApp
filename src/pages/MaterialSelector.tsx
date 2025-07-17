@@ -179,7 +179,7 @@ const MaterialSelector = () => {
                       color="text.secondary"
                       sx={{ whiteSpace: "normal" }}
                     >
-                      {i.categoria} — {i.descricao || "-"} s
+                      {i.categoria} — {i.descricao || "-"}
                     </Typography>
                   </Box>
                   <Button
