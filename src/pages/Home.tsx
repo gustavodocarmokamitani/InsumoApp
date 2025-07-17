@@ -327,7 +327,6 @@ const Home = () => {
                   sx={{ my: 2 }}
                 >
                   Descrição: {insumo.descricao}
-                  {insumo.descricao}
                 </Typography>
                 <Typography
                   variant="body2"
