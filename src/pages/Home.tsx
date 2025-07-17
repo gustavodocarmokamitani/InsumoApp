@@ -43,6 +43,7 @@ const Home = () => {
   const fetchInsumos = async () => {
     try {
       const res = await api.get("/insumos");
+      console.log("Insumos atualizados:", res.data);
       setInsumos(res.data);
       setFilteredInsumos(res.data);
     } catch (err) {
@@ -85,10 +86,10 @@ const Home = () => {
     try {
       if (editingId !== null) {
         // Atualização
-        await api.put(`/insumos/${editingId}`, [form]);
+        await api.put(`/insumos/${editingId}`, form);
       } else {
         // Criação
-        await api.post("/insumos", form);
+        await api.post("/insumos", [form]);
       }
 
       setForm({
@@ -99,6 +100,7 @@ const Home = () => {
         marca: "",
       });
       setEditingId(null);
+      setSearchTerm("");
       fetchInsumos();
     } catch (err) {
       console.error("Erro ao salvar insumo", err);
@@ -309,6 +311,14 @@ const Home = () => {
                   color="text.secondary"
                   sx={{ my: 2 }}
                 >
+                  Marca: {insumo.marca}
+                </Typography>
+
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ my: 2 }}
+                >
                   Categoria: {insumo.categoria}
                 </Typography>
                 <Typography
@@ -325,9 +335,6 @@ const Home = () => {
                   sx={{ my: 2 }}
                 >
                   Unidade: {insumo.unidadeMedida}
-                </Typography>
-                <Typography variant="body1" sx={{ mt: 1 }}>
-                  Marca: {insumo.marca}
                 </Typography>
 
                 <Button
