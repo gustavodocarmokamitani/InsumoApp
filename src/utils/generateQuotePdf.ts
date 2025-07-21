@@ -9,7 +9,7 @@ interface Selecionado extends Insumo {
 interface ClientInfo {
   name: string;
   company: string;
-  brandIdentity: string;
+  cpfcnpj: string;
   email: string;
 }
 
@@ -22,9 +22,10 @@ export const generateQuotePdf = ({ selecionados, clientInfo }: PdfData) => {
   const doc = new jsPDF();
 
   // Dados fixos da empresa (você pode passá-los como parâmetro também, se quiser que sejam dinâmicos)
-  const companyLocation = "R.Noburo Nonaka, Santa Lídia \nGuarulhos - SP";
-  const companyWebsite = "gustavodocarmokamitani.com.br";
-  const companyEmail = "gustavodocarmokamitani@gmail.com";
+  const companyLocation =
+    "Rua Fideles Papini, 761 - Vila Prudente \nSão Paulo - SP";
+  const companyWebsite = "rrengeletrica.com.br";
+  const companyEmail = "rps.santos2005@gmail.com";
 
   const quoteDate = new Date().toLocaleDateString("pt-BR", {
     day: "2-digit",
@@ -74,17 +75,18 @@ export const generateQuotePdf = ({ selecionados, clientInfo }: PdfData) => {
     doc.text(clientInfo.company, 14, currentY + 5);
     currentY += 10;
   }
-  if (clientInfo.brandIdentity) {
-    doc.text("Identidade da Marca:", 14, currentY);
-    doc.text(clientInfo.brandIdentity, 14, currentY + 5);
-    currentY += 10;
-  }
 
   // Client Email (Right column) - Start at the same Y as left column if left column is not empty
   let rightColumnY = startYClientInfoLeft;
   if (clientInfo.email) {
     doc.text("Email do Cliente:", 140, rightColumnY);
     doc.text(clientInfo.email, 140, rightColumnY + 5);
+    rightColumnY += 10;
+  }
+
+  if (clientInfo.cpfcnpj) {
+    doc.text("CPF | CNPJ:", 140, rightColumnY);
+    doc.text(clientInfo.cpfcnpj, 140, rightColumnY + 5);
     rightColumnY += 10;
   }
 
@@ -95,7 +97,7 @@ export const generateQuotePdf = ({ selecionados, clientInfo }: PdfData) => {
   if (
     clientInfo.name ||
     clientInfo.company ||
-    clientInfo.brandIdentity ||
+    clientInfo.cpfcnpj ||
     clientInfo.email ||
     currentY > 65
   ) {
@@ -105,10 +107,15 @@ export const generateQuotePdf = ({ selecionados, clientInfo }: PdfData) => {
 
   // Table Header for items
   autoTable(doc, {
-    head: [["Indice", "Descrição do Item", "Subtotal", "Total do Item"]],
+    head: [
+      ["Índice", "Nome do Item", "Marca", "Unidade de Medida", "Quantidade"],
+    ],
     body: selecionados.map((s, idx) => [
       (idx + 1).toString(),
       s.nome,
+      s.marca,
+      s.unidadeMedida,
+      s.quantidade.toString(),
     ]),
     startY: currentY + 5,
     styles: { fontSize: 9, cellPadding: 3 },
@@ -118,19 +125,17 @@ export const generateQuotePdf = ({ selecionados, clientInfo }: PdfData) => {
       fontStyle: "bold",
     },
     columnStyles: {
-      0: { cellWidth: 15, halign: "center" },
-      1: { cellWidth: 100 },
-      2: { cellWidth: 35, halign: "left" },
-      3: { cellWidth: 35, halign: "left" },
+      0: { cellWidth: 15, halign: "center" }, // Índice
+      1: { cellWidth: 70 }, // Nome do Item
+      2: { cellWidth: 35 }, // Marca
+      3: { cellWidth: 33 }, // Unidade de Medida
+      4: { cellWidth: 30 }, // Quantidade
     },
   });
 
-  const finalYAfterItemsTable =
-    (doc as any).lastAutoTable.finalY || currentY + 5;
+  const pdfName = clientInfo.name?.trim()
+    ? `${clientInfo.name.trim().replace(/\s+/g, "_").toLowerCase()}.pdf`
+    : "orcamento.pdf";
 
-  // Line below Grand Total
-  doc.setLineWidth(0.5);
-  doc.line(140, finalYAfterItemsTable + 26, 196, finalYAfterItemsTable + 26);
-
-  doc.save("orcamento.pdf");
+  doc.save(pdfName);
 };

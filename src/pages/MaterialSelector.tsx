@@ -40,7 +40,7 @@ const MaterialSelector = () => {
   // New state variables for client information
   const [clientName, setClientName] = useState("");
   const [clientCompany, setClientCompany] = useState("");
-  const [clientBrandIdentity, setClientBrandIdentity] = useState("");
+  const [CPFCNPJ, setCPFCNPJ] = useState("");
   const [clientEmail, setClientEmail] = useState("");
 
   const theme = useTheme();
@@ -94,7 +94,7 @@ const MaterialSelector = () => {
       clientInfo: {
         name: clientName,
         company: clientCompany,
-        brandIdentity: clientBrandIdentity,
+        cpfcnpj: CPFCNPJ,
         email: clientEmail,
       },
     });
@@ -390,10 +390,10 @@ const MaterialSelector = () => {
                   {...({} as any)}
                 >
                   <TextField
-                    label="Identidade da Marca"
+                    label="CPF | CNPJ"
                     fullWidth
-                    value={clientBrandIdentity}
-                    onChange={(e) => setClientBrandIdentity(e.target.value)}
+                    value={CPFCNPJ}
+                    onChange={(e) => setCPFCNPJ(e.target.value)}
                     variant="outlined"
                   />
                 </Grid>
