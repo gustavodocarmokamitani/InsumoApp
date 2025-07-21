@@ -1,6 +1,7 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import type { Insumo } from "../interfaces/Insumo";
+import logo from "../assets/logo.png";
 
 interface Selecionado extends Insumo {
   quantidade: number;
@@ -20,6 +21,9 @@ interface PdfData {
 
 export const generateQuotePdf = ({ selecionados, clientInfo }: PdfData) => {
   const doc = new jsPDF();
+
+  // ✅ Adiciona a logo no topo direito
+  doc.addImage(logo, "PNG", 170, 10, 25, 20); // x, y, width, height
 
   // Dados fixos da empresa (você pode passá-los como parâmetro também, se quiser que sejam dinâmicos)
   const companyLocation =
