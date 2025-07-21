@@ -127,8 +127,8 @@ export const generateQuotePdf = ({ selecionados, clientInfo }: PdfData) => {
     columnStyles: {
       0: { cellWidth: 15, halign: "center" }, // Índice
       1: { cellWidth: 70 }, // Nome do Item
-      2: { cellWidth: 35 }, // Marca
-      3: { cellWidth: 33 }, // Unidade de Medida
+      2: { cellWidth: 33 }, // Marca
+      3: { cellWidth: 35 }, // Unidade de Medida
       4: { cellWidth: 30 }, // Quantidade
     },
   });
